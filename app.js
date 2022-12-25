@@ -6,18 +6,20 @@ const path = require('path')
 const methodOverride = require('method-override')
 const { findByIdAndUpdate } = require('./models/campground')
 const Campground = require('./models/campground')
+const ejsMate = require('ejs-mate')
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp')
    .then(() => console.log("MONGODB connected!!!"))
    .catch(err => console.log(err))
 
+app.engine('ejs',ejsMate)
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname,'views'))
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended:true}))
 
 app.get('/',(req,res) => {
-    res.render('home')
+    res.send('Home it is')
 })
 
 app.get('/campgrounds',async (req,res) => {
@@ -38,7 +40,6 @@ app.get('/campgrounds/:id', async (req,res) => {
 app.get('/campgrounds/:id/edit',async (req,res) => {
     const {id} = req.params
     const foundCamp = await Campground.findById(id)
-    console.log(foundCamp)
     res.render('campgrounds/edit',{foundCamp})
 })
 
