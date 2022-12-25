@@ -1,10 +1,9 @@
-const { urlencoded } = require('express')
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const path = require('path')
+const { urlencoded } = require('express')
 const methodOverride = require('method-override')
-const { findByIdAndUpdate } = require('./models/campground')
 const Campground = require('./models/campground')
 const ejsMate = require('ejs-mate')
 
@@ -50,8 +49,9 @@ app.put('/campgrounds/:id',async (req,res) => {
 })
 
 app.post('/campgrounds',async (req,res) => {
-    await Campground.insertMany(req.body.campground)
-    res.redirect('/campgrounds')
+    const campground =  new Campground(req.body.campground)
+    await campground.save()
+    res.redirect(`/campgrounds/${campground.id}`)
 })
 
 app.delete('/campgrounds/:id',async (req,res) => {
