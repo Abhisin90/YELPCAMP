@@ -1,5 +1,6 @@
 const Joi = require('joi')
 
+// Form validation package where it checks for particular input data alongside its conditions to check if they are met or not
 module.exports.campgroundSchema = Joi.object({
     campground:Joi.object({
         title:Joi.string().required(),
