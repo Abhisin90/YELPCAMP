@@ -4,6 +4,7 @@ const Campground = require('../models/campground')
 const catchAsync = require('../utils/catchAsync')
 const ExpressError = require("../utils/ExpressError")
 const {campgroundSchema} = require('../schemas')  // Joi schemas
+const {isLoggedIn} = require('../middleware')
 
 //  middleware function for validating campground form 
 const validateCampground = (req,res,next) => {
@@ -22,12 +23,12 @@ router.get('/',catchAsync(async (req,res) => {
     res.render('campgrounds/index',{campgrounds})
 }))
 
-router.get('/new', (req,res) => {
+router.get('/new',isLoggedIn,(req,res) => {
     res.render('campgrounds/new')
 })
 
 // populate helps to showcase documents as whole rather than just their objectIds
-router.get('/:id', catchAsync(async (req,res) => {
+router.get('/:id',catchAsync(async (req,res) => {
     const {id} = req.params
     const foundCamp = await Campground.findById(id).populate('reviews')
     if(!foundCamp) {
@@ -55,7 +56,7 @@ router.put('/:id',validateCampground,catchAsync(async (req,res) => {
     res.redirect(`/campgrounds/${updatedCamp.id}`) 
 }))
 
-router.post('/',validateCampground,catchAsync(async (req,res) => {
+router.post('/',isLoggedIn,validateCampground,catchAsync(async (req,res) => {
     const campground =  new Campground(req.body.campground)
     await campground.save()
     req.flash('success','Successfully made a new campground')
