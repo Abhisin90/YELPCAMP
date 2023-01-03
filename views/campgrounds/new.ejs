@@ -2,7 +2,7 @@
     <div class="row">
         <h1 class="text-center">New Campground</h1>
         <div class="col-6 offset-3">
-            <form action="/campgrounds" method="POST" novalidate class="validatedForm">
+            <form action="/campgrounds" method="POST" novalidate class="validatedForm" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label  class="form-label" for="title">Title</label>
                     <input class="form-control" type="text" name="campground[title]" id="title" required >
@@ -13,13 +13,6 @@
                 <div class="mb-3">
                     <label class="form-label" for="location">Location</label>
                     <input class="form-control" type="text" name="campground[location]" id="location" required >
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="image">Image URL</label>
-                    <input class="form-control" type="text" name="campground[image]" id="image" required >
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -37,6 +30,13 @@
                 <div class="mb-3">
                     <label class="form-label" for="description">Description</label>
                     <textarea class="form-control" type="text" name="campground[description]" id="description" required ></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="file" name="image"  class="form-control" id="image" aria-describedby="image" aria-label="Upload" required multiple>
+                    <button class="btn btn-outline-secondary" type="button">Browse</button>                 
                     <div class="valid-feedback">
                         Looks good!
                     </div>
