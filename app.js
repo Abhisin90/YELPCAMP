@@ -16,8 +16,10 @@ const flash = require('connect-flash')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./models/user')
+const mongoDBstore = require('connect-mongo')
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp-camp'
 
-mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp')
+mongoose.connect(dbUrl)
    .then(() => console.log("MONGODB connected!!!"))
    .catch(err => console.log(err))
 
@@ -29,12 +31,27 @@ app.use(methodOverride('_method'))     // middleware for using https method othe
 app.use(express.urlencoded({extended:true})) // built in middleware for form-data
 app.use(express.static(path.join(__dirname,'public')))
 
+const secret = process.env.SECRET || 'thiswasagoodsecret'
+const store = mongoDBstore.create({
+    mongoUrl:dbUrl,
+    secret,
+    touchAfter:24 * 60 * 60
+})
+
+store.on("error",(err) => {
+    console.log('SESSION STORE ERROR',err)
+})
+
+
+
 const sessionConfig = {
-    secret:'thiswasagoodsecret',
+    store,
+    secret,
     resave:false,
     saveUninitialized:true,
     cookie:{
         httpOnly:true,
+        secure:true,
         expires:Date.now() + 1000*60*60*24*7,
         maxAge:1000*60*60*24*7
     }
@@ -78,6 +95,7 @@ app.use((err,req,res,next) => {
     res.status(statusCode).render('error',{err})
 })
 
-app.listen(3000,() => {
-    console.log("APP listening on port 3000!!!")
+const port = process.env.port || 3000
+app.listen(port,() => {
+    console.log("APP listening on port {port}!!!")
 })
