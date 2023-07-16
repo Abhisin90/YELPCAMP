@@ -63,7 +63,7 @@ app.use('/',userRoutes)
 
 // crud functionality requests
 app.get('/',(req,res) => {
-    res.send('Home it is')
+    res.render('home')
 })
 
 // for paths other than required

@@ -10,7 +10,11 @@
                     </div>
                 <% } else {%> 
                     <div class="col-md-4">
-                        <img class="img-fluid" alt="" src="<%=campground.images[0].url%> ">
+                        <% if(campground.images.length) { %>
+                            <img class="img-fluid" alt="" src="<%=campground.images[0].url%> ">
+                        <% } else { %>
+
+                        <% } %>
                     </div>
                 <% } %> 
                 <div class="col-md-8">
