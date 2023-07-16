@@ -1,6 +1,6 @@
 body{
     height: 100vh;
-    background-image:linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url(/images/home.jpg);
+    background-image:linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url('https://howtostartanllc.com/images/business-ideas/business-idea-images/campground.jpg');
     background-size: cover;
     background-position: center; 
     text-shadow: 0 0.05rem 0.1rem rgba(0,0,0,0.5);

@@ -42,8 +42,6 @@ store.on("error",(err) => {
     console.log('SESSION STORE ERROR',err)
 })
 
-
-
 const sessionConfig = {
     store,
     secret,
@@ -51,7 +49,7 @@ const sessionConfig = {
     saveUninitialized:true,
     cookie:{
         httpOnly:true,
-        secure:true,
+        // secure:true,
         expires:Date.now() + 1000*60*60*24*7,
         maxAge:1000*60*60*24*7
     }
@@ -97,5 +95,5 @@ app.use((err,req,res,next) => {
 
 const port = process.env.port || 3000
 app.listen(port,() => {
-    console.log("APP listening on port {port}!!!")
+    console.log(`APP listening on port ${port}!!`)
 })
